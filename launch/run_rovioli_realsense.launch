@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<launch>
+	
+	<arg name="map_builder_save_image_as_resources" default="false"/>
+	<arg name="vio_camera_topic_suffix" default="image_rect_raw" />
+	<arg name="save_map_folder" default="$(find vio_launch)/maps/my_map"/>
+  
+  <node name="rovioli" pkg="rovioli" type="rovioli" required="true" output="screen" clear_params="true">
+    	<param name="save_map_folder" value="$(arg save_map_folder)"/>
+	<param name="vio_camera_topic_suffix" value="image_rect_raw"/>
+	<param name="datasource_type" value="rostopic"/>
+	<param name="sensor_calibration_file" value="$(find vio_launch)/config/realsense_435i.yaml"/>
+	<param name="v" value="0"/>
+	<param name="map_builder_save_image_as_resources" value="false"/>
+    	<param name="optimize_map_to_localization_map" value="false"/>
+ </node>
+
+</launch>
