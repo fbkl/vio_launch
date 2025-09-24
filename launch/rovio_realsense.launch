@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<launch>
+  <node pkg="rovio" type="rovio_node" name="rovio" output="screen">
+	  <param name="filter_config" value="$(find vio_launch)/config/rs_435i_filter.info"/>
+	<param name="camera0_config" value="$(find vio_launch)/config/rs_435i_0.yaml"/>
+  	<param name="camera1_config" value="$(find vio_launch)/config/rs_435i_1.yaml"/>
+  </node>
+</launch>
