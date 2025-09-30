@@ -45,7 +45,7 @@
   <arg name="accel_fps"           default="0"/>
   <arg name="enable_gyro"         default="false"/>
   <arg name="enable_accel"        default="false"/>
-  <arg name="enable_pose"         default="false"/>
+  <arg name="enable_pose"         default="true"/>
 
   <arg name="enable_pointcloud"   default="false"/>
   <arg name="pointcloud_texture_stream" default="RS2_STREAM_COLOR"/>  <!-- use RS2_STREAM_ANY to avoid using texture -->
@@ -216,6 +216,11 @@
 
 	  <remap from="/camera/infra1/image_rect_raw" to="/cam0/image_raw" />
 	  <remap from="/camera/infra2/image_rect_raw" to="/cam1/image_raw" />
+	  <remap from="/camera/infra1/metadata" to="/cam0/metadata" />
+	  <remap from="/camera/infra2/metadata" to="/cam1/metadata" />
+	  <remap from="/camera/infra1/camera_info" to="/cam0/camera_info" />
+	  <remap from="/camera/infra2/camera_info" to="/cam1/camera_info" />
 	  <remap from="/camera/imu" to="/imu0" />
   </node>
+<rosparam>/camera/stereo_module/emitter_enabled: 2</rosparam>
 </launch>

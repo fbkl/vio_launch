@@ -12,7 +12,7 @@
 
   <arg name="depth_width"         default="640"/>
   <arg name="depth_height"        default="480"/>
-  <arg name="enable_depth"        default="true"/>
+  <arg name="enable_depth"        default="false"/>
 
   <arg name="infra_width"        default="640"/>
   <arg name="infra_height"       default="480"/>
@@ -32,7 +32,7 @@
   <arg name="enable_gyro"         default="true"/>
   <arg name="enable_accel"        default="true"/>
 
-  <arg name="enable_pointcloud"         default="true"/>
+  <arg name="enable_pointcloud"         default="false"/>
   <arg name="pointcloud_texture_stream" default="RS2_STREAM_COLOR"/>
   <arg name="pointcloud_texture_index"  default="0"/>
 
@@ -47,7 +47,7 @@
   <arg name="unite_imu_method"          default="copy"/>
   <arg name="topic_odom_in"             default="map"/>
   <arg name="calib_odom_file"           default=""/>
-  <arg name="publish_odom_tf"           default="true"/>
+  <arg name="publish_odom_tf"           default="false"/>
   <arg name="allow_no_texture_points"   default="false"/>
 
   <group ns="$(arg camera)">
@@ -105,5 +105,9 @@
 
   <!-- Loads the camera model -->
   <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find realsense2_description)/urdf/test_d435_camera.urdf.xacro' use_nominal_extrinsics:=false"/>
+  
+  <machine name="main_pc" address="frkle-Predator-PT515-52" env-loader="/opt/ros/env.sh" user="frkle"/>
+  <node machine="main_pc" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  <node machine="main_pc" name="rviz" pkg="rviz" type="rviz" args="-d $(find realsense2_description)/rviz/urdf.rviz" required="true"/>
 
 </launch>
