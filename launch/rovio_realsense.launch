@@ -3,12 +3,17 @@
   <arg name="adj_cam" default="false"/>
   <arg name="adj_world" default="false"/>
   <arg name="adj_map" default="true"/>
+  <arg name="adj_map_fixed" default="true"/>
+  <arg name="adj_map_movable" default="false"/>
+  <arg name="adj_map_frame" default="adj_map"/>
   <node pkg="rovio" type="rovio_node" name="rovio" output="screen">
 	<param name="filter_config" value="$(find vio_launch)/config/rs_435i_filter.info"/>
 	<param name="camera0_config" value="$(find vio_launch)/config/rs_435i_0.yaml"/>
   	<param name="camera1_config" value="$(find vio_launch)/config/rs_435i_1.yaml"/>
-	<param name="map_frame" value="adj_map" />
-  	<param name="world_frame" value="adj_map" />
+	<param name="map_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
+  	<param name="world_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
+	<param name="map_frame" 	value="map"   	unless="$(arg adj_map)" />
+  	<param name="world_frame" 	value="map" 	unless="$(arg adj_map)" />
   	<!-- param name="world_frame" value="map"/ -->
   </node>
   <include file="$(find vio_launch)/launch/includes/machines.xml"/>
@@ -28,8 +33,9 @@
   </node>
   </group>
   <!--node pkg="tf2_ros" type="static_transform_publisher" name="camera0_is_baselink" args="0 0 0  0.5 0.5 -0.5 0.5 camera0 base_link" unless="$(arg adj_cam)"/ -->
-  <!-- this is correct. dont change pls -->
+  <!-- this is correct. dont change pls, [narrator voice]: it wasnt -->
   <node pkg="tf2_ros" type="static_transform_publisher" name="camera0_is_baselink" args="0 0 0  0.5 -0.5 0.5 0.5 camera0 base_link" unless="$(arg adj_cam)"/>
+  <!--node pkg="tf2_ros" type="static_transform_publisher" name="camera0_is_baselink" args="0 0 0  0 0 0 1 camera0 base_link" unless="$(arg adj_cam)"/ -->
   <group ns="world" if="$(arg adj_world)">
   <node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_world" >
 	  <!-- these are reconfigure params, can i set it here? i think not... -->
@@ -49,7 +55,7 @@
 
   <!-- So what is the deal here? Well, if you want to have the imu camera bundle thing in a different frame from ROS, be my guest, however, there is no reason to do that now. That said, to make it easier in the beggining we are going to assume that we know how far away we are from the ground. With the camera with the zero quaternion, the sensors point towards y. We can make it point towards x with 0 0 0.7 0.7 but i don't think that helps, so i am removing it for now-->
   <group ns="map" if="$(arg adj_map)">
-  <node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_map" >
+  <node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_map" if="$(arg adj_map_movable)" >
 	  <!-- these are reconfigure params, can i set it here? i think not... -->
 	  <param name="parent_frame_id"  	value="map"/>
 	  <param name="child_frame_id" 		value="adj_map"/>
@@ -61,7 +67,7 @@
 	  <param name="qz" 		value="0.707"/>
 	  <param name="qw" 		value="0.707"/>
   </node>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_is_adj_map" args="0 0 1.5  0. 0. 0.707 0.707 map adj_map" if="$(arg adj_map_fixed)" />
   </group>
-  <node pkg="tf2_ros" type="static_transform_publisher" name="map_is_adj_map" args="0 0 1.5  0 0 0 1 map adj_map" unless="$(arg adj_map)"/>
   <!--  args="0 0 0  -1.570 1.57 1.57  imu  base_link" -->
 </launch>

@@ -2,7 +2,7 @@
 ; #include "/home/user/workspace/rovio/cfg/rovio_custom.info"
 Common
 {
-	doVECalibration true;		Should the camera-IMU extrinsics be calibrated online
+	doVECalibration false;		Should the camera-IMU extrinsics be calibrated online
 	depthType 1;				Type of depth parametrization (0: normal, 1: inverse depth, 2: log, 3: hyperbolic)
 	verbose false;				Is the verbose active
 }
@@ -13,9 +13,9 @@ Camera0
 	qCM_y  0.0;										Y-entry of IMU to Camera quaterion (Hamilton)
 	qCM_z  0.0;											Z-entry of IMU to Camera quaterion (Hamilton)
 	qCM_w  1.0;											W-entry of IMU to Camera quaterion (Hamilton)
-	MrMC_x 0.0;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_y 0.0;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_z 0.0;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_x 0.1;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_y 0.2;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_z 0.3;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
 }
 Camera1
 {
@@ -24,17 +24,17 @@ Camera1
 	qCM_y  0.0;										Y-entry of IMU to Camera quaterion (Hamilton)
 	qCM_z  0.0;											Z-entry of IMU to Camera quaterion (Hamilton)
 	qCM_w  1.0;											W-entry of IMU to Camera quaterion (Hamilton)
-	MrMC_x 0.0;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_y 0.0;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_z 0.0;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_x 0.4;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_y 0.5;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_z 0.6;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
 }
 Init
 {
     State
     {
-        pos_0 0;			X-entry of initial position (world to IMU in world) [m]
-        pos_1 0;			Y-entry of initial position (world to IMU in world) [m]
-        pos_2 0;			Z-entry of initial position (world to IMU in world) [m]
+        pos_0 0.;			X-entry of initial position (world to IMU in world) [m]
+        pos_1 0.;			Y-entry of initial position (world to IMU in world) [m]
+        pos_2 0.;			Z-entry of initial position (world to IMU in world) [m]
         vel_0 0;			X-entry of initial velocity (robocentric, IMU) [m/s]
         vel_1 0;			Y-entry of initial velocity (robocentric, IMU) [m/s]
         vel_2 0;			Z-entry of initial velocity (robocentric, IMU) [m/s]
@@ -44,10 +44,10 @@ Init
         gyb_0 0;			X-entry of gyroscope bias [rad/s]
         gyb_1 0;			Y-entry of gyroscope bias [rad/s]
         gyb_2 0;			Z-entry of gyroscope bias [rad/s]
-        att_x 0;			X-entry of initial attitude (IMU to world, Hamilton)
-        att_y 0;			Y-entry of initial attitude (IMU to world, Hamilton)
-        att_z 0;			Z-entry of initial attitude (IMU to world, Hamilton)
-        att_w 1;			W-entry of initial attitude (IMU to world, Hamilton)
+        att_x 1;			X-entry of initial attitude (IMU to world, Hamilton)
+        att_y 0.;			Y-entry of initial attitude (IMU to world, Hamilton)
+        att_z 0.;			Z-entry of initial attitude (IMU to world, Hamilton)
+        att_w 0.;			W-entry of initial attitude (IMU to world, Hamilton)
     }
     Covariance
     {
@@ -199,17 +199,17 @@ PoseUpdate
 	doInertialAlignmentAtStart true;			Should the transformation between I and W be explicitly computed and set with the first pose measurement.
 	timeOffset 0.0;								Time offset added to the pose measurement timestamps
     useOdometryCov false;                    Should the UpdateNoise position covariance be scaled using the covariance in the Odometry message
-    qVM_x 0;									X-entry of quaterion representing IMU to reference body coordinate frame of pose measurement (Hamilton)
-    qVM_y 0;									Y-entry of quaterion representing IMU to reference body coordinate frame of pose measurement (Hamilton)
-    qVM_z 0;									Z-entry of quaterion representing IMU to reference body coordinate frame of pose measurement (Hamilton)
-    qVM_w 1;									W-entry of quaterion representing IMU to reference body coordinate frame of pose measurement (Hamilton)
+    qVM_x 0.5;									X-entry of quaterion representing IMU to reference body coordinate frame of pose measurement (Hamilton)
+    qVM_y 0.5;									Y-entry of quaterion representing IMU to reference body coordinate frame of pose measurement (Hamilton)
+    qVM_z 0.5;									Z-entry of quaterion representing IMU to reference body coordinate frame of pose measurement (Hamilton)
+    qVM_w 0.5;									W-entry of quaterion representing IMU to reference body coordinate frame of pose measurement (Hamilton)
     MrMV_x 0;									X-entry of vector representing IMU to reference body coordinate frame of pose measurement
     MrMV_y 0;									Y-entry of vector representing IMU to reference body coordinate frame of pose measurement
     MrMV_z 0;									Z-entry of vector representing IMU to reference body coordinate frame of pose measurement
-    qWI_x 0;									X-entry of quaterion representing World to reference inertial coordinate frame of pose measurement (Hamilton)
-    qWI_y 0;									Y-entry of quaterion representing World to reference inertial coordinate frame of pose measurement (Hamilton)
-    qWI_z 0;									Z-entry of quaterion representing World to reference inertial coordinate frame of pose measurement (Hamilton)
-    qWI_w 1;									W-entry of quaterion representing World to reference inertial coordinate frame of pose measurement (Hamilton)
+    qWI_x 0.5;									X-entry of quaterion representing World to reference inertial coordinate frame of pose measurement (Hamilton)
+    qWI_y 0.5;									Y-entry of quaterion representing World to reference inertial coordinate frame of pose measurement (Hamilton)
+    qWI_z 0.5;									Z-entry of quaterion representing World to reference inertial coordinate frame of pose measurement (Hamilton)
+    qWI_w 0.5;									W-entry of quaterion representing World to reference inertial coordinate frame of pose measurement (Hamilton)
     IrIW_x 0;									X-entry of vector representing World to reference inertial coordinate frame of pose measurement
     IrIW_y 0;									Y-entry of vector representing World to reference inertial coordinate frame of pose measurement
     IrIW_z 0;									Z-entry of vector representing World to reference inertial coordinate frame of pose measurement

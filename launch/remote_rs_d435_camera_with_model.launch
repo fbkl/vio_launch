@@ -50,7 +50,7 @@
   <arg name="publish_odom_tf"           default="false"/>
   <arg name="allow_no_texture_points"   default="false"/>
 
-  <arg name="publish_tf"               default="false"/>
+  <arg name="publish_tf"               default="true"/>
   <group ns="$(arg camera)">
     <include file="$(find vio_launch)/launch/includes/nodelet.launch.xml">
 	    <arg name="publish_tf"               value="$(arg publish_tf)"/>
