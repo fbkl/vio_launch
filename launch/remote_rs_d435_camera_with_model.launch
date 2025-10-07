@@ -50,8 +50,11 @@
   <arg name="publish_odom_tf"           default="false"/>
   <arg name="allow_no_texture_points"   default="false"/>
 
+  <arg name="publish_tf"               default="false"/>
   <group ns="$(arg camera)">
     <include file="$(find vio_launch)/launch/includes/nodelet.launch.xml">
+	    <arg name="publish_tf"               value="$(arg publish_tf)"/>
+
       <arg name="tf_prefix"                value="$(arg tf_prefix)"/>
       <arg name="external_manager"         value="$(arg external_manager)"/>
       <arg name="manager"                  value="$(arg manager)"/>
@@ -108,6 +111,6 @@
   
   <machine name="main_pc" address="frkle-Predator-PT515-52" env-loader="/opt/ros/env.sh" user="frkle"/>
   <node machine="main_pc" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
-  <node machine="main_pc" name="rviz" pkg="rviz" type="rviz" args="-d $(find realsense2_description)/rviz/urdf.rviz" required="true"/>
+  <!--node machine="main_pc" name="rviz" pkg="rviz" type="rviz" args="-d $(find realsense2_description)/rviz/urdf.rviz" required="true"/ -->
 
 </launch>
