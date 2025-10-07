@@ -13,9 +13,9 @@ Camera0
 	qCM_y  0.0;										Y-entry of IMU to Camera quaterion (Hamilton)
 	qCM_z  0.0;											Z-entry of IMU to Camera quaterion (Hamilton)
 	qCM_w  1.0;											W-entry of IMU to Camera quaterion (Hamilton)
-	MrMC_x 0.1;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_y 0.2;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_z 0.3;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_x -0.0055167;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_y 0.0050969;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_z 0.011733;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
 }
 Camera1
 {
@@ -24,9 +24,9 @@ Camera1
 	qCM_y  0.0;										Y-entry of IMU to Camera quaterion (Hamilton)
 	qCM_z  0.0;											Z-entry of IMU to Camera quaterion (Hamilton)
 	qCM_w  1.0;											W-entry of IMU to Camera quaterion (Hamilton)
-	MrMC_x 0.4;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_y 0.5;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
-	MrMC_z 0.6;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_x 0.044322;											X-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_y 0.0050969;										Y-entry of IMU to Camera vector (expressed in IMU CF) [m]
+	MrMC_z 0.011733;											Z-entry of IMU to Camera vector (expressed in IMU CF) [m]
 }
 Init
 {
@@ -34,7 +34,7 @@ Init
     {
         pos_0 0.;			X-entry of initial position (world to IMU in world) [m]
         pos_1 0.;			Y-entry of initial position (world to IMU in world) [m]
-        pos_2 0.;			Z-entry of initial position (world to IMU in world) [m]
+        pos_2 0.4;			Z-entry of initial position (world to IMU in world) [m]
         vel_0 0;			X-entry of initial velocity (robocentric, IMU) [m/s]
         vel_1 0;			Y-entry of initial velocity (robocentric, IMU) [m/s]
         vel_2 0;			Z-entry of initial velocity (robocentric, IMU) [m/s]
