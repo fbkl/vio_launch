@@ -214,13 +214,13 @@
     <param name="wait_for_device_timeout"  type="double" value="$(arg wait_for_device_timeout)"/>
     <param name="unite_imu_method"         type="str"    value="$(arg unite_imu_method)"/>
 
-	  <remap from="/camera/infra1/image_rect_raw" to="/cam0/image_raw" />
-	  <remap from="/camera/infra2/image_rect_raw" to="/cam1/image_raw" />
-	  <remap from="/camera/infra1/metadata" to="/cam0/metadata" />
-	  <remap from="/camera/infra2/metadata" to="/cam1/metadata" />
-	  <remap from="/camera/infra1/camera_info" to="/cam0/camera_info" />
-	  <remap from="/camera/infra2/camera_info" to="/cam1/camera_info" />
-	  <remap from="/camera/imu" to="/imu0" />
+	  <remap from="infra1/image_rect_raw" to="cam0/image_raw" />
+	  <remap from="infra2/image_rect_raw" to="cam1/image_raw" />
+	  <remap from="infra1/metadata" to="cam0/metadata" />
+	  <remap from="infra2/metadata" to="cam1/metadata" />
+	  <remap from="infra1/camera_info" to="cam0/camera_info" />
+	  <remap from="infra2/camera_info" to="cam1/camera_info" />
+	  <remap from="imu" to="imu0" />
   </node>
-<rosparam>/camera/stereo_module/emitter_enabled: 2</rosparam>
+<rosparam>stereo_module/emitter_enabled: 2</rosparam>
 </launch>
