@@ -1,5 +1,5 @@
 <launch>
-	<arg name="camera"              default="torso"/>
+	<arg name="camera"              default="arm"/>
 	<group ns="$(arg camera)">
 		<include file="$(find vio_launch)/launch/rovio_realsense.launch">
 			<arg name="camera"                value="$(arg camera)"/>

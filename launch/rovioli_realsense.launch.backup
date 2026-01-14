@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<launch>
+  <arg name="adj_cam" default="false"/>
+  <arg name="adj_world" default="false"/>
+  <arg name="adj_map" default="true"/>
+  <arg name="adj_map_fixed" default="true"/>
+  <arg name="adj_map_movable" default="false"/>
+  <arg name="adj_map_frame" default="adj_map"/>
+  <arg name="camera"     default="camera0"/>
+  
+
+  	<!-- SENSORS AND CALIBRATION -->
+  <arg name="sensor_calibration_file" default="$(find rovioli)/share/euroc-stereo.yaml"/>
+	<arg name="external_imu_parameters_rovio" default=""/>
+	<arg name="imu_to_camera_time_offset_ns" default="0"/>
+	<arg name="vio_nframe_sync_tolerance_ns" default="500000"/>
+	<arg name="vio_nframe_sync_max_output_frequency_hz" default="10"/>
+
+	<!-- DATA SOURCE -->
+	<arg name="datasource_type" default="rostopic"/>
+	<arg name="datasource_rosbag" default=""/>
+	<arg name="rovioli_zero_initial_timestamps" default="false"/>
+	<arg name="rovio_image_mask_path" default=""/>
+	<arg name="rovioli_image_apply_clahe_histogram_equalization" default="false"/>
+
+
+	<!-- only needed if there are multiple ncameras/lidars/imus/odometries in the calibration file. -->
+	<arg name="selected_ncamera_sensor_id" default=""/>
+	<arg name="selected_imu_sensor_id" default=""/>
+
+	<!-- MAP BUILDING -->
+	<arg name="rovioli_run_map_builder" default="true"/>
+	<arg name="save_map_folder" default="rovioli_map"/>
+	<arg name="overwrite_existing_map" default="false"/>
+	<arg name="optimize_map_to_localization_map" default="false"/>
+	<arg name="map_builder_save_image_as_resources" default="false"/>
+
+  <!-- VISUAL LOCALIZATION -->
+  <arg name="vio_localization_map_folder" default=""/>
+
+  <!-- TF -->
+  <arg name="tf_map_frame" default="map"/>
+  <arg name="map_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
+  <arg name="map_frame" 	value="map"   	unless="$(arg adj_map)" />
+  <arg name="tf_mission_frame" default="mission"/>
+  
+  <arg name="tf_imu_frame" 	value="$(arg camera)/imu"  />
+  
+
+  <!-- DEBUGGING AND LOGGING -->
+  <arg name="alsologtostderr" default="true"/>
+  <arg name="colorlogtostderr" default="true"/>
+  <arg name="v" default="3"/>
+  <arg name="publish_debug_markers" default="true"/>
+
+	<arg name="export_estimated_poses_to_csv" default=""/>
+	<arg name="feature_tracker_visualize_keypoint_detections" default="false"/>
+	<arg name="feature_tracker_visualize_keypoint_matches" default="false"/>
+	<arg name="rovio_enable_frame_visualization" default="false"/>
+	<arg name="rovioli_enable_health_checking" default="false" />
+	<arg name="vio_camera_topic_suffix" default="image_raw" />
+
+  <node name="rovioli" pkg="rovioli" type="rovioli" required="true" output="screen" clear_params="true">
+
+		<!-- SENSORS AND CALIBRATION -->
+		<param name="sensor_calibration_file" value="$(arg sensor_calibration_file)"/>
+		<param name="external_imu_parameters_rovio" value="$(arg external_imu_parameters_rovio)"/>
+		<param name="imu_to_camera_time_offset_ns" value="$(arg imu_to_camera_time_offset_ns)"/>
+		<param name="vio_nframe_sync_tolerance_ns" value="$(arg vio_nframe_sync_tolerance_ns)"/>
+		<param name="vio_nframe_sync_max_output_frequency_hz" value="$(arg vio_nframe_sync_max_output_frequency_hz)"/>
+		<param name="rovioli_image_apply_clahe_histogram_equalization" value="$(arg rovioli_image_apply_clahe_histogram_equalization)"/>
+
+
+		<!-- DATA SOURCE -->
+		<param name="datasource_type" value="$(arg datasource_type)"/>
+		<param name="datasource_rosbag" value="$(arg datasource_rosbag)"/>
+		<param name="rovioli_zero_initial_timestamps" value="$(arg rovioli_zero_initial_timestamps)"/>
+		<param name="rovio_image_mask_path" value="$(arg rovio_image_mask_path)"/>
+
+		<param name="selected_ncamera_sensor_id" value="$(arg selected_ncamera_sensor_id)"/>
+		<param name="selected_imu_sensor_id" value="$(arg selected_imu_sensor_id)"/>
+
+    <!-- MAP BUILDING -->
+    <param name="rovioli_run_map_builder" value="$(arg rovioli_run_map_builder)"/>
+    <param name="save_map_folder" value="$(arg save_map_folder)"/>
+    <param name="overwrite_existing_map" value="$(arg overwrite_existing_map)"/>
+    <param name="optimize_map_to_localization_map" value="$(arg optimize_map_to_localization_map)"/>
+    <param name="map_builder_save_image_as_resources" value="$(arg map_builder_save_image_as_resources)"/>
+
+    <!-- LOCALIZATION -->
+    <param name="vio_localization_map_folder" value="$(arg vio_localization_map_folder)"/>
+
+    <!-- TF -->
+    <param name="tf_map_frame" value="$(arg tf_map_frame)"/>
+    <param name="tf_mission_frame" value="$(arg tf_mission_frame)"/>
+    <param name="tf_imu_frame" value="$(arg tf_imu_frame)"/>
+
+    <!-- DEBUGGING AND LOGGING -->
+    <param name="alsologtostderr" value="$(arg alsologtostderr)"/>
+    <param name="colorlogtostderr" value="$(arg colorlogtostderr)"/>
+    <param name="v" value="$(arg v)"/>
+    <param name="publish_debug_markers" value="$(arg publish_debug_markers)"/>
+
+    <!-- Pose to CSV requires the map builder to be running as well -->
+    <param name="export_estimated_poses_to_csv" value="$(arg export_estimated_poses_to_csv)"/>
+    <param name="feature_tracker_visualize_keypoint_detections" value="$(arg feature_tracker_visualize_keypoint_detections)"/>
+    <param name="feature_tracker_visualize_keypoint_matches" value="$(arg feature_tracker_visualize_keypoint_matches)"/>
+    <param name="rovio_enable_frame_visualization" value="$(arg rovio_enable_frame_visualization)"/>
+    <param name="rovioli_enable_health_checking" value="$(arg rovioli_enable_health_checking)"/>
+
+    <param name="vio_camera_topic_suffix" value="$(arg vio_camera_topic_suffix)"/>
+  </node>
+	<param name="filter_config" value="$(find vio_launch)/config/rs_435i_filter.info"/>
+	<param name="camera0_config" value="$(find vio_launch)/config/rs_435i_0.yaml"/>
+  	<param name="camera1_config" value="$(find vio_launch)/config/rs_435i_1.yaml"/>
+  <include file="$(find vio_launch)/launch/includes/machines.xml"/>
+  
+  <group if="$(arg adj_cam)">
+  <node machine="main_pc" pkg="ar_test" type="adjustable_node" name="imu_is_$(arg camera)_link" >
+	  <!-- these are reconfigure params, can i set it here? i think not... -->
+	  <param name="parent_frame_id"  	value="$(arg camera)"/>
+	  <param name="child_frame_id" 		value="$(arg camera)_link"/>
+	  <param name="x" 		value="0"/>
+	  <param name="y" 		value="0"/>
+	  <param name="z" 		value="0"/>
+	  <param name="qx" 		value="0.5"/>
+	  <param name="qy" 		value="0.5"/>
+	  <param name="qz" 		value="-0.5"/>
+	  <param name="qw" 		value="0.5"/>
+  </node>
+  </group>
+  <!--node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0.5 0.5 -0.5 0.5 $(arg camera) $(arg camera)_link" unless="$(arg adj_cam)"/ -->
+  <!-- this is correct. dont change pls, [narrator voice]: it wasnt -->
+  <node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0.5 -0.5 0.5 0.5 $(arg camera) $(arg camera)_link" unless="$(arg adj_cam)"/>
+  <!--node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0 0 0 1 $(arg camera) $(arg camera)_link" unless="$(arg adj_cam)"/ -->
+  <group ns="world" if="$(arg adj_world)">
+  <node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_world" >
+	  <!-- these are reconfigure params, can i set it here? i think not... -->
+	  <param name="parent_frame_id"  	value="map"/>
+	  <param name="child_frame_id" 		value="world"/>
+	  <param name="x" 		value="0"/>
+	  <param name="y" 		value="0"/>
+	  <param name="z" 		value="0"/>
+	  <param name="qx" 		value="0.0"/>
+	  <param name="qy" 		value="0.0"/>
+	  <param name="qz" 		value="0.0"/>
+	  <param name="qw" 		value="1.0"/>
+  </node>
+  </group>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="world_is_map" args="0 0 0  0 0 0 1 map world" unless="$(arg adj_world)"/>
+
+
+  <!-- So what is the deal here? Well, if you want to have the imu camera bundle thing in a different frame from ROS, be my guest, however, there is no reason to do that now. That said, to make it easier in the beggining we are going to assume that we know how far away we are from the ground. With the camera with the zero quaternion, the sensors point towards y. We can make it point towards x with 0 0 0.7 0.7 but i don't think that helps, so i am removing it for now-->
+  <group ns="map" if="$(arg adj_map)">
+  <node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_map" if="$(arg adj_map_movable)" >
+	  <!-- these are reconfigure params, can i set it here? i think not... -->
+	  <param name="parent_frame_id"  	value="map"/>
+	  <param name="child_frame_id" 		value="adj_map"/>
+	  <param name="x" 		value="0"/>
+	  <param name="y" 		value="0"/>
+	  <param name="z" 		value="1.5"/>
+	  <param name="qx" 		value="0.0"/>
+	  <param name="qy" 		value="0.0"/>
+	  <param name="qz" 		value="0.707"/>
+	  <param name="qw" 		value="0.707"/>
+  </node>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="map_is_adj_map" args="0 0 1.5  0. 0. 0.707 0.707 map adj_map" if="$(arg adj_map_fixed)" />
+  </group>
+  <!--  args="0 0 0  -1.570 1.57 1.57  imu  $(arg camera)_link" -->
+</launch>
