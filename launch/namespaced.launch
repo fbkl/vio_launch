@@ -4,9 +4,9 @@
 		<include file="$(find vio_launch)/launch/rovio_realsense.launch">
 			<arg name="camera"                value="$(arg camera)"/>
 		</include>
-	</group>
 		<include file="$(find vio_launch)/launch/remote_rs_d435_camera_with_model.launch">
 			<arg name="camera"                value="$(arg camera)"/>
 		</include>
+	</group>
 </launch>
 
