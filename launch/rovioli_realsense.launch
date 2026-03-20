@@ -43,8 +43,42 @@
 	<arg name="rovio_enable_frame_visualization" default="false"/>
 	<arg name="rovioli_enable_health_checking" default="true" />
 	<arg name="vio_camera_topic_suffix" default="image_raw" />
+	<arg name="machine" 		default=""/>
 	<group ns="camera">
-		<node name="rovioli" pkg="rovioli" type="rovioli" required="true" output="screen" clear_params="true">
+		<node name="rovioli" pkg="rovioli" type="rovioli" required="true" output="screen" clear_params="true" machine="$(arg machine)" if="$(eval arg('machine') != '')">
+
+			<!-- SENSORS AND CALIBRATION -->
+			<param name="sensor_calibration_file" value="$(arg sensor_calibration_file)"/>
+
+
+			<remap from="/imu0" to="/camera/imu0"/>
+
+			<!-- DATA SOURCE -->
+			<param name="datasource_type" value="$(arg datasource_type)"/>
+
+			<!-- MAP BUILDING -->
+			<param name="save_map_folder" value="$(arg save_map_folder)"/>
+			<param name="overwrite_existing_map" value="$(arg overwrite_existing_map)"/>
+			<param name="optimize_map_to_localization_map" value="$(arg optimize_map_to_localization_map)"/>
+			<param name="map_builder_save_image_as_resources" value="$(arg map_builder_save_image_as_resources)"/>
+
+			<!-- TF -->
+			<param name="tf_map_frame" value="$(arg tf_map_frame)"/>
+			<param name="tf_mission_frame" value="$(arg tf_mission_frame)"/>
+			<param name="tf_imu_frame" value="$(arg tf_imu_frame)"/>
+
+			<!-- DEBUGGING AND LOGGING -->
+			<param name="alsologtostderr" value="$(arg alsologtostderr)"/>
+			<param name="colorlogtostderr" value="$(arg colorlogtostderr)"/>
+			<param name="v" value="$(arg v)"/>
+			<param name="publish_debug_markers" value="$(arg publish_debug_markers)"/>
+
+			<param name="vio_camera_topic_suffix" value="$(arg vio_camera_topic_suffix)"/>
+			<param name="feature_tracker_visualize_keypoint_detections" value="$(arg feature_tracker_visualize_keypoint_detections)" />
+			<param name="feature_tracker_visualize_keypoint_matches" value="$(arg feature_tracker_visualize_keypoint_matches)" />
+			<param name="rovio_enable_frame_visualization" value="$(arg rovio_enable_frame_visualization)" />
+		</node>
+		<node name="rovioli" pkg="rovioli" type="rovioli" required="true" output="screen" clear_params="true" if="$(eval arg('machine') == '')">
 
 			<!-- SENSORS AND CALIBRATION -->
 			<param name="sensor_calibration_file" value="$(arg sensor_calibration_file)"/>
