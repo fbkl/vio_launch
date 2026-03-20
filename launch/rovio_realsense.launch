@@ -7,7 +7,20 @@
   <arg name="adj_map_movable" default="false"/>
   <arg name="adj_map_frame" default="adj_map"/>
   <arg name="camera"     default="camera0"/>
-  <node pkg="rovio" type="rovio_node" name="rovio" output="screen">
+	<arg name="machine" 		default=""/>
+  <node pkg="rovio" type="rovio_node" name="rovio" output="screen" machine="$(arg machine)" if="$(eval arg('machine') != '')">
+	<param name="filter_config" value="$(find vio_launch)/config/rs_435i_filter.info"/>
+	<param name="camera0_config" value="$(find vio_launch)/config/rs_435i_0.yaml"/>
+  	<param name="camera1_config" value="$(find vio_launch)/config/rs_435i_1.yaml"/>
+	<param name="map_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
+  	<param name="world_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
+	<param name="map_frame" 	value="map"   	unless="$(arg adj_map)" />
+  	<param name="world_frame" 	value="map" 	unless="$(arg adj_map)" />
+	<param name="camera_frame" 	value="$(arg camera)/camera"  />
+	<param name="imu_frame" 	value="$(arg camera)/imu"  />
+  	<!-- param name="world_frame" value="map"/ -->
+  </node>
+  <node pkg="rovio" type="rovio_node" name="rovio" output="screen" if="$(eval arg('machine') == '' )">
 	<param name="filter_config" value="$(find vio_launch)/config/rs_435i_filter.info"/>
 	<param name="camera0_config" value="$(find vio_launch)/config/rs_435i_0.yaml"/>
   	<param name="camera1_config" value="$(find vio_launch)/config/rs_435i_1.yaml"/>
