@@ -10,7 +10,8 @@
 
 
 	<!-- SENSORS AND CALIBRATION -->
-	<arg name="sensor_calibration_file" default="$(find vio_launch)/config/realsense_435i.yaml"/>
+	<!-- this is super annoying, but it does the lookup on the host,, yeah, pretty dumb right? or not, well you still need to have the packages installed in the remote, idk what would make more sense-->
+	<arg name="sensor_calibration_file" default="/home/frederico/pervio_ws/src/vio_launch/config/realsense_435i.yaml"/>
 
 	<!-- DATA SOURCE -->
 	<arg name="datasource_type" default="rostopic"/>
@@ -44,14 +45,14 @@
 	<arg name="rovioli_enable_health_checking" default="true" />
 	<arg name="vio_camera_topic_suffix" default="image_raw" />
 	<arg name="machine" 		default=""/>
-	<group ns="camera">
+	<group ns="$(arg camera)">
 		<node name="rovioli" pkg="rovioli" type="rovioli" required="true" output="screen" clear_params="true" machine="$(arg machine)" if="$(eval arg('machine') != '')">
 
 			<!-- SENSORS AND CALIBRATION -->
 			<param name="sensor_calibration_file" value="$(arg sensor_calibration_file)"/>
 
 
-			<remap from="/imu0" to="/camera/imu0"/>
+			<remap from="/imu0" to="/$(arg camera)/imu0"/>
 
 			<!-- DATA SOURCE -->
 			<param name="datasource_type" value="$(arg datasource_type)"/>
@@ -84,7 +85,7 @@
 			<param name="sensor_calibration_file" value="$(arg sensor_calibration_file)"/>
 
 
-			<remap from="/imu0" to="/camera/imu0"/>
+			<remap from="/imu0" to="/$(arg camera)/imu0"/>
 
 			<!-- DATA SOURCE -->
 			<param name="datasource_type" value="$(arg datasource_type)"/>
