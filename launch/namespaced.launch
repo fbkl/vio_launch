@@ -1,12 +1,16 @@
 <launch>
 	<arg name="camera"              default="arm"/>
-	<group ns="$(arg camera)">
-		<include file="$(find vio_launch)/launch/rovio_realsense.launch">
-			<arg name="tf_prefix"                value="$(arg tf_prefix)"/>
-		</include>
-		<include file="$(find vio_launch)/launch/remote_rs_d435_camera_with_model.launch">
-			<arg name="tf_prefix"                value="$(arg tf_prefix)"/>
-		</include>
-	</group>
+	<arg name="machine" 		default=""/>
+	<arg name="visualize" 		default="true"/>
+	<include file="$(find vio_launch)/launch/includes/machines.xml"/>
+	<include file="$(find vio_launch)/launch/rovio_realsense.launch">
+		<arg name="camera"                value="$(arg camera)"/>
+		<arg name="machine" 		value="$(arg machine)"/>
+		<arg name="visualize" 		value="$(arg visualize)"/>
+	</include>
+	<include file="$(find vio_launch)/launch/remote_rs_d435_camera_with_model.launch">
+		<arg name="camera"                value="$(arg camera)"/>
+		<arg name="machine" 		value="$(arg machine)"/>
+	</include>
 </launch>
 

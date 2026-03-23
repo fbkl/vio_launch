@@ -1,6 +1,6 @@
 sensors:
   - id: c63aecb41bfdfd6b7e1fac37c7cbe7bf
-    topic: /camera/imu
+    topic: imu0
     description: "realsense but noise levels are wrong"
     sensor_type: IMU
     sigmas:
@@ -18,7 +18,7 @@ sensors:
     topic: ""
     cameras:
       - camera:
-          topic: /camera/infra1
+          topic: cam0
           id: 54812562fa109c40fe90b29a59dd7798
           description: "infra1"
           sensor_type: CAMERA
@@ -46,7 +46,7 @@ sensors:
                  0.0, 0.0, 0.0, 1.0]
   
       - camera:
-          topic: /camera/infra2
+          topic: cam1
           id: 54812562fa109c40fe90b29a59dd7723
           description: "infra2"
           sensor_type: CAMERA

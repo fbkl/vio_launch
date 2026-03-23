@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<launch>
+	
+	<arg name="map_builder_save_image_as_resources" default="false"/>
+	<arg name="vio_camera_topic_suffix" default="image_rect_raw" />
+	<arg name="save_map_folder" default="$(find vio_launch)/maps/my_map"/>
+	<arg name="feature_tracker_visualize_keypoint_detections" default="false"/>
+	<arg name="feature_tracker_visualize_keypoint_matches" default="false"/>
+	<arg name="rovio_enable_frame_visualization" default="false"/>
+  
+  <node name="rovioli" pkg="rovioli" type="rovioli" required="true" output="screen" clear_params="true">
+    	<param name="save_map_folder" value="$(arg save_map_folder)"/>
+	<param name="datasource_type" value="rosbag"/>
+	<param name="sensor_calibration_file" value="$(find rovioli)/share/euroc-mono.yaml"/>
+	<param name="v" value="0"/>
+	<param name="alsologtostderr" value="0"/>
+	<param name="map_builder_save_image_as_resources" value="false"/>
+	<param name="optimize_map_to_localization_map" value="false"/>
+	<param name="datasource_rosbag" value="/media/frederico/rootfs/MH_01_easy.bag"/>
+
+	<param name="feature_tracker_visualize_keypoint_detections" value="false"/>
+	<param name="feature_tracker_visualize_keypoint_matches" value="false"/>
+	<param name="rovio_enable_frame_visualization" value="false"/>
+
+
+</node>
+
+</launch>
