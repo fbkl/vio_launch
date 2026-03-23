@@ -9,12 +9,15 @@
 	<arg name="camera"     default="camera0"/>
 	<arg name="machine" 		default=""/>
 	<arg name="visualize" 		default="true"/>
+
+	<!-- ros why do you have to be like this?-->
+	<arg name="remote_vio_path" default="/home/frederico/pervio_ws/src/vio_launch" />
 	<group ns="$(arg camera)">
 		<node pkg="rovio" type="rovio_node" name="rovio" output="screen" machine="$(arg machine)" if="$(eval arg('machine') != '')">
-			<param name="filter_config" value="$(find vio_launch)/config/rs_435i_filter.info" if="$(arg visualize)" />
-			<param name="filter_config" value="$(find vio_launch)/config/rs_435i_filter_no_vis.info" unless="$(arg visualize)" />
-			<param name="camera0_config" value="$(find vio_launch)/config/rs_435i_0.yaml"/>
-			<param name="camera1_config" value="$(find vio_launch)/config/rs_435i_1.yaml"/>
+			<param name="filter_config" value="$(arg remote_vio_path)/config/rs_435i_filter.info" if="$(arg visualize)" />
+			<param name="filter_config" value="$(arg remote_vio_path)/config/rs_435i_filter_no_vis.info" unless="$(arg visualize)" />
+			<param name="camera0_config" value="$(arg remote_vio_path)/config/rs_435i_0.yaml"/>
+			<param name="camera1_config" value="$(arg remote_vio_path)/config/rs_435i_1.yaml"/>
 			<param name="map_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
 			<param name="world_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
 			<param name="map_frame" 	value="map"   	unless="$(arg adj_map)" />
@@ -24,9 +27,10 @@
 			<!-- param name="world_frame" value="map"/ -->
 		</node>
 		<node pkg="rovio" type="rovio_node" name="rovio" output="screen" if="$(eval arg('machine') == '' )">
-			<param name="filter_config" value="$(find vio_launch)/config/rs_435i_filter.info"/>
-			<param name="camera0_config" value="$(find vio_launch)/config/rs_435i_0.yaml"/>
-			<param name="camera1_config" value="$(find vio_launch)/config/rs_435i_1.yaml"/>
+			<param name="filter_config" value="$(arg remote_vio_path)/config/rs_435i_filter.info" if="$(arg visualize)" />
+			<param name="filter_config" value="$(arg remote_vio_path)/config/rs_435i_filter_no_vis.info" unless="$(arg visualize)" />
+			<param name="camera0_config" value="$(arg remote_vio_path)/config/rs_435i_0.yaml"/>
+			<param name="camera1_config" value="$(arg remote_vio_path)/config/rs_435i_1.yaml"/>
 			<param name="map_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
 			<param name="world_frame" 	value="$(arg adj_map_frame)" if="$(arg adj_map)" />
 			<param name="map_frame" 	value="map"   	unless="$(arg adj_map)" />
