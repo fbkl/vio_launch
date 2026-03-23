@@ -3,7 +3,7 @@
 	<arg name="machine" 		default=""/>
   	<include file="$(find vio_launch)/launch/includes/machines.xml"/>
 	<group ns="$(arg camera)">
-		<include file="$(find vio_launch)/launch/rovio_realsense.launch">
+		<include file="$(find vio_launch)/launch/rovioli_realsense.launch">
 			<arg name="camera"                value="$(arg camera)"/>
 			<arg name="machine" 		value="$(arg machine)"/>
 		</include>
