@@ -29,7 +29,7 @@
 	<arg name="map_frame" value="map"   unless="$(arg adj_map)" />
 	<arg name="tf_mission_frame" default="mission"/>
 
-	<arg name="tf_imu_frame" value="$(arg camera)/imu"  />
+	<arg name="tf_imu_frame" value="imu/$(arg camera)"  />
 
 
 	<!-- DEBUGGING AND LOGGING -->
@@ -117,7 +117,7 @@
 		<group if="$(arg adj_cam)">
 			<node machine="main_pc" pkg="ar_test" type="adjustable_node" name="imu_is_$(arg camera)_link" >
 				<!-- these are reconfigure params, can i set it here? i think not... -->
-				<param name="parent_frame_id"  value="$(arg camera)"/>
+				<param name="parent_frame_id"  value="$(arg tf_imu_frame)"/>
 				<param name="child_frame_id" value="$(arg camera)_link"/>
 				<param name="x" value="0"/>
 				<param name="y" value="0"/>
@@ -130,7 +130,7 @@
 		</group>
 		<!--node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0.5 0.5 -0.5 0.5 $(arg camera) $(arg camera)_link" unless="$(arg adj_cam)"/ -->
 		<!-- this is correct. dont change pls, [narrator voice]: it wasnt -->
-		<node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0.5 -0.5 0.5 0.5 $(arg camera) $(arg camera)_link" unless="$(arg adj_cam)"/>
+		<node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0.5 -0.5 0.5 0.5 $(arg tf_imu_frame) $(arg camera)_link" unless="$(arg adj_cam)"/>
 		<!--node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0 0 0 1 $(arg camera) $(arg camera)_link" unless="$(arg adj_cam)"/ -->
 		<group ns="world" if="$(arg adj_world)">
 			<node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_world" >
