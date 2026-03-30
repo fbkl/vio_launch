@@ -1,5 +1,5 @@
 <launch>
-	<arg name="camera"              default="arm"/>
+	<arg name="camera"              default="radius"/>
 	<arg name="machine" 		default=""/>
 	<arg name="visualize" 		default="true"/>
 	<include file="$(find vio_launch)/launch/includes/machines.xml"/>
