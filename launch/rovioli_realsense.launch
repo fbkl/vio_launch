@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <launch>
-	<arg name="adj_cam" default="false"/>
-	<arg name="adj_world" default="false"/>
-	<arg name="adj_map" default="true"/>
-	<arg name="adj_map_fixed" default="true"/>
-	<arg name="adj_map_movable" default="false"/>
-	<arg name="adj_map_frame" default="adj_map"/>
 	<arg name="camera"     default="camera0"/>
+	<arg name="adj_map" default="true"/>
+	<arg name="adj_map_frame" default="adj_map"/>
 
 
 	<!-- SENSORS AND CALIBRATION -->
@@ -24,9 +20,8 @@
 
 
 	<!-- TF -->
-	<arg name="tf_map_frame" default="map"/>
-	<arg name="map_frame" value="$(arg adj_map_frame)" if="$(arg adj_map)" />
-	<arg name="map_frame" value="map"   unless="$(arg adj_map)" />
+	<arg name="tf_map_frame" value="$(arg adj_map_frame)" if="$(arg adj_map)" />
+	<arg name="tf_map_frame" value="map"   unless="$(arg adj_map)" />
 	<arg name="tf_mission_frame" default="mission"/>
 
 	<arg name="tf_imu_frame" value="imu/$(arg camera)"  />
@@ -114,57 +109,5 @@
 		</node>
 		<include file="$(find vio_launch)/launch/includes/machines.xml"/>
 
-		<group if="$(arg adj_cam)">
-			<node machine="main_pc" pkg="ar_test" type="adjustable_node" name="imu_is_$(arg camera)_link" >
-				<!-- these are reconfigure params, can i set it here? i think not... -->
-				<param name="parent_frame_id"  value="$(arg tf_imu_frame)"/>
-				<param name="child_frame_id" value="$(arg camera)_link"/>
-				<param name="x" value="0"/>
-				<param name="y" value="0"/>
-				<param name="z" value="0"/>
-				<param name="qx" value="0.5"/>
-				<param name="qy" value="0.5"/>
-				<param name="qz" value="-0.5"/>
-				<param name="qw" value="0.5"/>
-			</node>
-		</group>
-		<!--node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0.5 0.5 -0.5 0.5 $(arg camera) $(arg camera)_link" unless="$(arg adj_cam)"/ -->
-		<!-- this is correct. dont change pls, [narrator voice]: it wasnt -->
-		<node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0.5 -0.5 0.5 0.5 $(arg tf_imu_frame) $(arg camera)_link" unless="$(arg adj_cam)"/>
-		<!--node pkg="tf2_ros" type="static_transform_publisher" name="$(arg camera)_is_baselink" args="0 0 0  0 0 0 1 $(arg camera) $(arg camera)_link" unless="$(arg adj_cam)"/ -->
-		<group ns="world" if="$(arg adj_world)">
-			<node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_world" >
-				<!-- these are reconfigure params, can i set it here? i think not... -->
-				<param name="parent_frame_id"  value="map"/>
-				<param name="child_frame_id" value="world"/>
-				<param name="x" value="0"/>
-				<param name="y" value="0"/>
-				<param name="z" value="0"/>
-				<param name="qx" value="0.0"/>
-				<param name="qy" value="0.0"/>
-				<param name="qz" value="0.0"/>
-				<param name="qw" value="1.0"/>
-			</node>
-		</group>
-		<node pkg="tf2_ros" type="static_transform_publisher" name="world_is_map" args="0 0 0  0 0 0 1 map world" unless="$(arg adj_world)"/>
-
-
-		<!-- So what is the deal here? Well, if you want to have the imu camera bundle thing in a different frame from ROS, be my guest, however, there is no reason to do that now. That said, to make it easier in the beggining we are going to assume that we know how far away we are from the ground. With the camera with the zero quaternion, the sensors point towards y. We can make it point towards x with 0 0 0.7 0.7 but i don't think that helps, so i am removing it for now-->
-		<group ns="map" if="$(arg adj_map)">
-			<node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_map" if="$(arg adj_map_movable)" >
-				<!-- these are reconfigure params, can i set it here? i think not... -->
-				<param name="parent_frame_id"  value="map"/>
-				<param name="child_frame_id" value="adj_map"/>
-				<param name="x" value="0"/>
-				<param name="y" value="0"/>
-				<param name="z" value="1.5"/>
-				<param name="qx" value="0.0"/>
-				<param name="qy" value="0.0"/>
-				<param name="qz" value="0.707"/>
-				<param name="qw" value="0.707"/>
-			</node>
-			<node pkg="tf2_ros" type="static_transform_publisher" name="map_is_adj_map" args="0 0 1.5  0. 0. 0.707 0.707 map adj_map" if="$(arg adj_map_fixed)" />
-		</group>
-		<!--  args="0 0 0  -1.570 1.57 1.57  imu  $(arg camera)_link" -->
 	</group>
 </launch>

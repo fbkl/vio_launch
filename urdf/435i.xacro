@@ -2,10 +2,10 @@
 <robot name="realsense2_camera" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:arg name="body_part" default="bodypart"/>
   <xacro:arg name="use_nominal_extrinsics" default="false"/>
-  <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro" />
+  <xacro:include filename="$(find vio_launch)/urdf/_d435i.urdf.xacro" />
 
-  <link name="$(arg body_part)_base_link" />
-  <xacro:sensor_d435i parent="$(arg body_part)_base_link" name="$(arg body_part)" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
+  <link name="$(arg body_part)_parent" />
+  <xacro:sensor_d435i parent="$(arg body_part)_parent" name="$(arg body_part)" use_nominal_extrinsics="$(arg use_nominal_extrinsics)">
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:sensor_d435i>
 
