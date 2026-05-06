@@ -8,7 +8,7 @@
 	
 	<include file="$(find vio_launch)/launch/includes/machines.xml"/>
 
-		<node pkg="tf2_ros" type="static_transform_publisher" name="room_marker_broadcaster" args="-1 0 0 0 0 0 map room" />
+		<node pkg="tf2_ros" type="static_transform_publisher" name="room_marker_broadcaster" args="-1 0 0 0 0 -3.1415992 map room" />
 
 		<group ns="world" if="$(arg adj_world)">
 			<node machine="main_pc" pkg="ar_test" type="adjustable_node" name="what_is_world" >

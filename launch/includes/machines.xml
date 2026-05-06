@@ -5,5 +5,8 @@
   <machine name="rpi5-ubuntu" 	 address="rpi5-ubuntu" 			env-loader="/home/frederico/pervio_ws/devel/env.sh" user="frederico"/>
   <machine name="silveroli" 	 address="rpi5-silver-ubuntu" 		env-loader="/home/frederico/maplab_ws/devel/env.sh" user="frederico"/>
   <machine name="rpi5-ubuntuoli" address="rpi5-ubuntu" 			env-loader="/home/frederico/maplab_ws/devel/env.sh" user="frederico"/>
+  <!-- run it inside docker trick -->
+  <machine name="main_pc_docker" address="frkle-Predator-PT515-52" env-loader="/home/frkle/github/docker-opensimrt/scripts/docker_ros_loader.sh" user="frkle"/>
+  <machine name="raspberrypi" address="raspberrypi" env-loader="/home/frederico/github/docker-opensimrt/scripts/docker_ros_loader.sh" user="frederico"/>
 
 </launch>

@@ -5,6 +5,7 @@
 	<arg name="tf_prefix"           default="$(arg camera)"/>
 	<arg name="external_manager"    default="false"/>
 	<arg name="manager"             default="realsense2_camera_manager"/>
+  <arg name="output"              default="log"/>  <!-- [ screen | log ]-->
 
 	<arg name="fisheye_width"       default="640"/>
 	<arg name="fisheye_height"      default="480"/>
@@ -61,6 +62,7 @@
 			<arg name="manager"                  value="$(arg manager)"/>
 			<arg name="serial_no"                value="$(arg serial_no)"/>
 			<arg name="json_file_path"           value="$(arg json_file_path)"/>
+      <arg name="output"                   value="$(arg output)"/>
 
 			<arg name="enable_pointcloud"        value="$(arg enable_pointcloud)"/>
 			<arg name="pointcloud_texture_stream" value="$(arg pointcloud_texture_stream)"/>
@@ -106,8 +108,9 @@
 			<arg name="allow_no_texture_points"  value="$(arg allow_no_texture_points)"/>
 		</include>
 
-		<!-- fml-->
+		<!-- fml, maybe we can copy the syntax from the realsense nodelet thing and it will avoid this sad repetition-->
 		<include file="$(find vio_launch)/launch/includes/remote_nodelet.launch.xml" if="$(eval arg('machine') != '')" >
+      <arg name="output"                   value="$(arg output)"/>
 
 			<arg name="machine" value="$(arg machine)" />
 			<arg name="publish_tf"               value="$(arg publish_tf)"/>

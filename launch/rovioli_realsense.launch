@@ -41,7 +41,7 @@
 	<arg name="vio_camera_topic_suffix" default="image_raw" />
 	<arg name="machine" 		default=""/>
 	<group ns="$(arg camera)">
-		<node name="rovioli" pkg="rovioli" type="rovioli" required="true" output="screen" clear_params="true" machine="$(arg machine)" if="$(eval arg('machine') != '')">
+		<node name="rovioli" pkg="rovioli" type="rovioli" required="true" clear_params="true" machine="$(arg machine)" if="$(eval arg('machine') != '')">
 
 			<!-- SENSORS AND CALIBRATION -->
 			<param name="sensor_calibration_file" value="$(arg sensor_calibration_file)"/>
