@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<launch>
+	<include file="$(find vio_launch)/launch/includes/machines.xml"/>
+	<arg name="machine" 		default=""/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d /srv/host_data/arm.rviz" machine="$(arg machine)" if="$(eval arg('machine') != '')"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d /srv/host_data/arm.rviz" output="screen" if="$(eval arg('machine') == '' )"/>
+</launch>
