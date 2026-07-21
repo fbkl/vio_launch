@@ -9,6 +9,7 @@
 		<rosparam param="geometry_path_list">['/srv/data/geometry_v3.3','/srv/host_data/Geo'] </rosparam>
 		<param name="which_model_1_2" 		value="2" />
 
+		<remap from="/ik_visualization/input" to="/vio/ik/output"/>
 		<remap from="/ik_visualization/input_filtered" to="/vio/ik/output_filtered"/>
 		<remap from="/in_labels" to="/ik/out_labels"/>
 		
@@ -18,6 +19,7 @@
 		<rosparam param="geometry_path_list">['/srv/data/geometry_v3.3','/srv/host_data/Geo'] </rosparam>
 		<param name="which_model_1_2" 		value="2" />
 
+		<remap from="/ik_visualization/input" to="/vio/ik/output"/>
 		<remap from="/ik_visualization/input_filtered" to="/vio/ik/output_filtered"/>
 		<remap from="/in_labels" to="/ik/out_labels"/>
 		
