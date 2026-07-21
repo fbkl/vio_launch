@@ -14,7 +14,7 @@
 	<arg name="remote_vio_path" default="/home/frederico/pervio_ws/src/vio_launch" />
 	<group ns="$(arg camera)">
 		<!-- the log to the screen via ssh is flaky, file is better-->
-		<node pkg="rovio" type="rovio_node" name="rovio" machine="$(arg machine)" if="$(eval arg('machine') != '')" required="true">
+		<node pkg="rovio" type="rovio_node" respawn="true"	name="rovio" machine="$(arg machine)" if="$(eval arg('machine') != '')" >
 			<param name="filter_config" value="$(arg remote_vio_path)/config/rs_435i_filter.info" if="$(arg visualize)" />
 			<param name="filter_config" value="$(arg remote_vio_path)/config/rs_435i_filter_no_vis.info" unless="$(arg visualize)" />
 			<param name="camera0_config" value="$(arg remote_vio_path)/config/rs_435i_0.yaml"/>
@@ -27,7 +27,7 @@
 			<param name="imu_frame" 	value="$(arg tf_imu_frame)"  />
 			<!-- param name="world_frame" value="map"/ -->
 		</node>
-		<node pkg="rovio" type="rovio_node" name="rovio" output="screen" if="$(eval arg('machine') == '' )" required="true">
+		<node pkg="rovio" type="rovio_node" respawn="true"	name="rovio" output="screen" if="$(eval arg('machine') == '' )" >
 			<param name="filter_config" value="$(arg remote_vio_path)/config/rs_435i_filter.info" if="$(arg visualize)" />
 			<param name="filter_config" value="$(arg remote_vio_path)/config/rs_435i_filter_no_vis.info" unless="$(arg visualize)" />
 			<param name="camera0_config" value="$(arg remote_vio_path)/config/rs_435i_0.yaml"/>
