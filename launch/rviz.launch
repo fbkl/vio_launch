@@ -2,6 +2,8 @@
 <launch>
 	<include file="$(find vio_launch)/launch/includes/machines.xml"/>
 	<arg name="machine" 		default=""/>
-	<node name="rviz" pkg="rviz" type="rviz" args="-d /srv/host_data/arm.rviz" machine="$(arg machine)" if="$(eval arg('machine') != '')"/>
-	<node name="rviz" pkg="rviz" type="rviz" args="-d /srv/host_data/arm.rviz" output="screen" if="$(eval arg('machine') == '' )"/>
+	<arg name="model_dir" 		default="/srv∕shared/raquegopal"/>
+	<arg name="rviz_file" 		value="$(arg model_dir)/viz_model.rviz"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_file)" machine="$(arg machine)" if="$(eval arg('machine') != '')"/>
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_file)" output="screen" if="$(eval arg('machine') == '' )"/>
 </launch>
